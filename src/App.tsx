@@ -5,13 +5,11 @@ import {
     SignUp,
     SignedIn,
     SignedOut,
-    UserButton,
 } from '@clerk/clerk-react';
 
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import AuthLayout from './features/authentication';
-
 
 function App() {
     return (
