@@ -22,5 +22,6 @@ module.exports = {
     ],
     "react/react-in-jsx-scope": 0,
     "import/extensions": 0,
+    "react/require-default-props": "off"
   },
 };

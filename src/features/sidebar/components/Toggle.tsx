@@ -1,15 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ArrowLeftFromLine, ArrowRightFromLine } from 'lucide-react';
+import { AppState } from '@/types/types';
+
 import { onCollapse, onExpand } from '../sidebarSlice';
 import { Button } from '@/components/ui/button';
 
 function Toggle() {
     const dispatch = useDispatch();
-    const selectCollapsed = useSelector((state) => state.sidebar.collapsed);
+    const collapsed = useSelector((state: AppState) => state.sidebar.collapsed);
     return (
         <>
-            {selectCollapsed && (
+            {collapsed && (
                 <div className="hidden lg:flex w-full items-center justify-center pt-4 mb-4">
                     <Button
                         onClick={() => dispatch(onExpand())}
@@ -20,7 +22,7 @@ function Toggle() {
                     </Button>
                 </div>
             )}
-            {!selectCollapsed && (
+            {!collapsed && (
                 <div className="p-3 pl-6 mb-2 flex items-center w-full">
                     <p className="font-semibold text-primary text-white">
                         For you
