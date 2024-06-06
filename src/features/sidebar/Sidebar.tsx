@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useUser } from '@clerk/clerk-react';
 
 import { User } from '@/types/types';
 
@@ -18,26 +19,30 @@ export function SidebarSkeletion() {
 function Sidebar() {
     const [recommended, setRecommended] = useState<User[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const { user } = useUser();
     useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true);
-            try {
-                const data: { users: User[] } = await getRecommendedUsers();
-                setRecommended(data.users);
-            } catch (error) {
-                console.log('GET_RECOMMENDED');
-                console.error(error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
+        if (user !== undefined) {
+            const fetchData = async () => {
+                setIsLoading(true);
+                try {
+                    const data: { users: User[] } = await getRecommendedUsers(
+                        user?.id
+                    );
+                    setRecommended(data.users);
+                } catch (error) {
+                    console.log('GET_RECOMMENDED');
+                    console.error(error);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+            fetchData();
+        }
+    }, [user]);
     return (
         <Wrapper>
             {isLoading && <SidebarSkeletion />}
-            {!isLoading && (
+            {!isLoading && user !== undefined && (
                 <>
                     <Toggle />
                     <div className=" border-2 border-solid border-blue-800 space-y-4 pt-4 lg:pt-0 ">
